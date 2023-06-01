@@ -16,8 +16,8 @@ export const style = {
     diagram: {
         marginTop: '25px',
         width: '100%',
-        maxHeight: '600px',
-        height: '100%',
+        // maxHeight: '600px',
+        height: '600px',
         border: '2px solid gray',
         borderRadius: "10px",
         padding: '10px',

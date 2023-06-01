@@ -20,26 +20,7 @@ export const Diagram = ({
   monthsNames,
   handleClickNavigate,
 }) => {
-  console.log(data)
   const ref = useRef();
-  // const barChartData = {
-  //   labels: monthsNames,
-  //   datasets: [
-  //     {
-  //       data: firstProductData,
-  //       label: 'Фабрика А',
-  //       borderColor: "#3333ff",
-  //       backgroundColor: "rgb(254, 0, 3)",
-  //     },
-  //     {
-  //       data: secondProductData,
-  //       label: 'Фабрика Б',
-  //       borderColor: "#ff3333",
-  //       backgroundColor: "#0100FE",
-  //     }
-  //   ]
-  // };
-
   return (
     <Bar
       type="bar"

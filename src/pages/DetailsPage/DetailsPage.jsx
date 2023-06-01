@@ -36,7 +36,6 @@ export const DetailsPage = () => {
     fetch(`http://localhost:3001/products?factory_id=${factory_id}`).then(
       ({ data }) => {
         const fabr = data.filter((item) => item.date?.split("/")[1] === month);
-        console.log(getProductData(fabr));
         setChartData(getProductData(fabr));
       }
     );
