@@ -1,4 +1,34 @@
-import { months } from "../constants/constants";
+import { months, products } from "../constants/constants";
+
+// export const getProductData = (fabric) => {
+//     const productData = products.map((item, index) => {
+//       return +(fabric.reduce((acc, fab) => {
+//         if (index === 0) {
+//           return acc + fab.product1;
+//         } else {
+//           return acc + fab.product2;
+//         }
+//       }, 0) / 1000).toFixed(3);
+//     })
+  
+//     return {
+//       labels: products,
+//       datasets: [
+//         {
+//           data: productData,
+//           backgroundColor: [
+//             'red',
+//             'blue'
+//           ],
+//           borderColor: [
+//             'red',
+//             'blue'
+//           ],
+//           borderWidth: 1,
+//         },
+//       ],
+//     }
+//   }
 
 export const getDataByMonth = (fabr, filter) => {
     return months.map((item, i) => {
@@ -37,4 +67,14 @@ export const getData = (fabricOne, fabricTwo, filter) => {
           }
       ]
     };
+}
+
+export const getProductData = (factory) => {
+  const oneProduct = products.map((_, index) => {
+    return Number(factory.reduce((acc, factory) => {
+      if (index === 0) return acc + factory.product1;
+      else return acc + factory.product2;
+    }, 0) / 1000).toFixed(3);
+  });
+  return oneProduct;
 }

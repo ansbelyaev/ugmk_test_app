@@ -45,3 +45,15 @@ export const options = {
     },
   },
 };
+export const optionsCircular = {
+    plugins: {
+        legend: {
+            labels: {
+                fontColor: 'black',
+            },
+            position: 'bottom',
+            onClick: null
+        }
+    }
+  }
+export const products = ['Продукт 1', 'Продукт 2']

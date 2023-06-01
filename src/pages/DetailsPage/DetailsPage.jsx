@@ -1,53 +1,43 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
-import { Circle } from "../../components/Circle/Circle";
+import axios from "axios";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
+import { style } from "./style";
+
+import { Circle } from "../../components/Circle/Circle";
+import { getProductData } from "../../utils/utils";
 import { months } from "../../constants/constants";
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 export const DetailsPage = () => {
-  const [product, setProduct] = useState(null);
-  const [chartData, setChartData] = useState(null);
-
   const { factory_id, month } = useParams();
+  const [data, setChartData] = useState(null);
 
-  const factoryName = factory_id === "1" ? "А" : "Б";
-  const products = ["Продукт 1", "Продукт 2"];
+  const factoryName = factory_id === '1' ? 'А' : 'Б';
 
-  const nameOfMonth = months[month - 1];
-
-  const getProductData = useCallback(
-    (factory) => {
-      const oneProduct = products.map((_, index) => {
-        return Number(
-          factory.reduce((acc, factory) => {
-            if (index === 0) return acc + factory.product1;
-            else return acc + factory.product2;
-          }, 0) / 1000
-        ).toFixed(3);
-      });
-      return oneProduct;
-    },
-    [products]
-  );
-
+  const nameOfMonth = months[month - 1]
   useEffect(() => {
-    fetch(`http://localhost:3001/products?factory_id=${factory_id}`).then(
-      ({ data }) => {
-        const fabr = data.filter((item) => item.date?.split("/")[1] === month);
+    axios
+      .get(`http://localhost:3001/products?factory_id=${factory_id}`)
+      .then(({ data: product }) => {
+        const fabr = product.filter((item) => item.date?.split("/")[1] === month);
         setChartData(getProductData(fabr));
-      }
-    );
-  }, [getProductData, factory_id, month]);
+      });
+  }, [factory_id, month]);
 
   return (
-    <div className="statistic-page">
-      <h4>
+    <div style={style.wrap}>
+      <div>
+        <h4>
         Статистика по продукции фабрики {factoryName} за {nameOfMonth}
-      </h4>
-      <div className="circle-diagram">
-        <Circle product={chartData} />
+        </h4>
+      </div>
+      <div style={style.circle}>
+        <Circle data={data} />
       </div>
     </div>
   );

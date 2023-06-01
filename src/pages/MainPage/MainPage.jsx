@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -35,7 +35,7 @@ export const MainPage = () => {
   const [data, setData] = useState(null);
   const [factoryA, setFactoryA] = useState(null);
   const [factoryB, setFactoryB] = useState(null);
-
+  const navigate = useNavigate();
   const chartRef = useRef();
 
   useEffect(() => {
@@ -57,7 +57,16 @@ export const MainPage = () => {
       setData(getData(factoryA, factoryB, filter));
     }
   }, [filter, factoryA, factoryB]);
-  console.log('data', data)
+
+  const onClick = (event) => {
+    const [clickFabric] = getElementAtEvent(chartRef.current, event)
+    if (!clickFabric) return;
+
+    const factory_id = clickFabric.datasetIndex + 1;
+    const month = clickFabric.index + 1;
+    navigate(`/details/${factory_id}/${month}`);
+  }
+
   return (
     <div style={style.container}>
       <div style={style.filter}>
@@ -65,7 +74,7 @@ export const MainPage = () => {
         <BasicSelect onChange={handleChange} />
       </div>
       <div style={style.diagram}>
-        {data ? <Bar options={options} data={data} ref={chartRef} /> : null}
+        {data ? <Bar options={options} data={data} onClick={onClick} ref={chartRef} /> : null}
       </div>
     </div>
   );
