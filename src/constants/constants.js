@@ -1,23 +1,25 @@
 export const months = [
-  "Янв",
-  "Фев",
+  "Январь",
+  "Февраль",
   "Март",
-  "Апр",
+  "Апрель",
   "Май",
   "Июнь",
   "Июль",
-  "Авг",
-  "Сент",
-  "Окт",
-  "Нояб",
-  "Дек",
+  "Август",
+  "Сентябрь",
+  "Октябрь",
+  "Ноябрь",
+  "Декабрь",
 ];
+
 export const filters = [
   { label: "Все продукты", id: "0" },
   { label: "Продукт 1", id: "1" },
   { label: "Продукт 2", id: "2" },
 ];
-export const options = {
+
+export const optionsDiagram = {
   maintainAspectRatio: false,
   aspectRatio: 0.5,
   plugins: {
@@ -45,6 +47,7 @@ export const options = {
     },
   },
 };
+
 export const optionsCircular = {
     plugins: {
         legend: {
@@ -56,4 +59,5 @@ export const optionsCircular = {
         }
     }
   }
+
 export const products = ['Продукт 1', 'Продукт 2']

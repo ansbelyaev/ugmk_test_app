@@ -3,12 +3,12 @@ import React from "react";
 import { Pie } from "react-chartjs-2";
 
 export const Circle = ({ data }) => {
-  const pieDiagramData = {
+  const pieData = {
     labels: ["Продукт 1", "Продукт 2"],
     datasets: [{
       data,
-      backgroundColor: ["#008001", "#FEA500"],
-      hoverBackgroundColor: ["#008001", "#FEA500"]
+      backgroundColor: ["green", "orange"],
+      hoverBackgroundColor: ["green", "orange"]
     }]
   };
 
@@ -24,7 +24,7 @@ export const Circle = ({ data }) => {
           },
         }
       }}
-      data={pieDiagramData}
+      data={pieData}
     />
   );
   return pieDiagram;

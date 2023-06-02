@@ -7,9 +7,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 import { style } from "./style";
 
+import { months } from "../../constants/constants";
 import { Circle } from "../../components/Circle/Circle";
 import { getProductData } from "../../utils/utils";
-import { months } from "../../constants/constants";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -17,9 +17,10 @@ export const DetailsPage = () => {
   const { factory_id, month } = useParams();
   const [data, setChartData] = useState(null);
 
-  const factoryName = factory_id === '1' ? 'А' : 'Б';
+  const factory = factory_id === '1' ? 'А' : 'Б';
 
-  const nameOfMonth = months[month - 1]
+  const selectedMonth = months[month - 1]
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/products?factory_id=${factory_id}`)
@@ -33,7 +34,7 @@ export const DetailsPage = () => {
     <div style={style.wrap}>
       <div>
         <h4>
-        Статистика по продукции фабрики {factoryName} за {nameOfMonth}
+        Статистика по продукции фабрики {factory} за {selectedMonth}
         </h4>
       </div>
       <div style={style.circle}>

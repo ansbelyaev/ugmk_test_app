@@ -3,22 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import BasicSelect from "../../components/Select/Select";
-import { months, filters, options } from "../../constants/constants";
-import { Diagram } from "../../components/Diagram/Diagram";
 import { getData } from "../../utils/utils";
+import BasicSelect from "../../components/Select/Select";
+import { filters, optionsDiagram } from "../../constants/constants";
 
 import { style } from "./style";
 
 import { Bar, getElementAtEvent } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
   Title,
-  Tooltip,
   Legend,
+  Tooltip,
+  BarElement,
+  LinearScale,
+  CategoryScale,
+  Chart as ChartJS,
 } from 'chart.js';
 
 ChartJS.register(
@@ -74,7 +73,7 @@ export const MainPage = () => {
         <BasicSelect onChange={handleChange} />
       </div>
       <div style={style.diagram}>
-        {data ? <Bar options={options} data={data} onClick={onClick} ref={chartRef} /> : null}
+        {data ? <Bar options={optionsDiagram} data={data} onClick={onClick} ref={chartRef} /> : null}
       </div>
     </div>
   );
