@@ -4,12 +4,13 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function BasicSelect({ onChange }) {
-  const [value, setValue] = React.useState("0");
+export default function BasicSelect({ actualValue, onChange }) {
+  const [value, setValue] = React.useState(actualValue);
   
   const handleChange = (event) => {
-    setValue(event.target.value)
+    setValue(event.target.value);
     onChange(event.target.value);
+    localStorage.setItem('filter', event.target.value);
   };
 
   return (

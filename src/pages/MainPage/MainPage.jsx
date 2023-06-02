@@ -29,8 +29,10 @@ ChartJS.register(
   Legend
 );
 
+const savedData = localStorage.getItem('filter');
+
 export const MainPage = () => {
-  const [filter, setFilter] = useState(filters[0]);
+  const [filter, setFilter] = useState(savedData ?? filters[0].id);
   const [data, setData] = useState(null);
   const [factoryA, setFactoryA] = useState(null);
   const [factoryB, setFactoryB] = useState(null);
@@ -70,7 +72,7 @@ export const MainPage = () => {
     <div style={style.container}>
       <div style={style.filter}>
         <h4>Фильтр по типу продукции</h4>
-        <BasicSelect onChange={handleChange} />
+        <BasicSelect actualValue={savedData} onChange={handleChange} />
       </div>
       <div style={style.diagram}>
         {data ? <Bar options={optionsDiagram} data={data} onClick={onClick} ref={chartRef} /> : null}
