@@ -1,2 +1,9 @@
 node_modules
 build
+server
+Dockerfile
+README.md
+AUTHOR.txt
+.git
+.gitignore
+.dockerignore
