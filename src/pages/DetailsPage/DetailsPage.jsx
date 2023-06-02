@@ -23,10 +23,8 @@ export const DetailsPage = () => {
     axios
       .get(`http://localhost:3001/products?factory_id=${factory_id}`)
       .then(({ data: products }) => {
-        const fabr = products.filter(
-          ({ date }) => new Date(Date.parse(date)).getMonth() === +monthNumber
-        );
-        setChartData(getProductData(fabr));
+        const factories = products.filter(item => item.date?.split('/')[1] === monthNumber)
+        setChartData(getProductData(factories));
       });
   }, [factory_id, monthNumber]);
 
