@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { getData } from "../../utils/utils";
-import BasicSelect from "../../components/Select/Select";
+import FilterSelect from "../../components/Select/FilterSelect";
 import { filters, optionsDiagram } from "../../constants/constants";
 
-import { style } from "./style";
+import style from "./style.module.css";
 
 import { Bar, getElementAtEvent } from "react-chartjs-2";
 import {
@@ -18,7 +18,7 @@ import {
   LinearScale,
   CategoryScale,
   Chart as ChartJS,
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -29,53 +29,61 @@ ChartJS.register(
   Legend
 );
 
-const savedData = localStorage.getItem('filter');
+const savedData = localStorage.getItem("filter");
 
 export const MainPage = () => {
-  const [filter, setFilter] = useState(savedData ?? filters[0].id);
-  const [data, setData] = useState(null);
+  const [filterId, setFilterId] = useState(savedData ?? filters[0].id);
+  const [diagramData, setDiagramData] = useState(null);
   const [factoryA, setFactoryA] = useState(null);
   const [factoryB, setFactoryB] = useState(null);
   const navigate = useNavigate();
   const chartRef = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/products").then(({ data }) => {
-      const factoryA = data.filter((item) => item.factory_id === 1);
-      const factoryB = data.filter((item) => item.factory_id === 2);
-      setData(getData(factoryA, factoryB));
+    axios.get("http://localhost:3001/products").then(({ data: products }) => {
+      const factoryA = products.filter(({ factory_id }) => factory_id === 1);
+      const factoryB = products.filter(({ factory_id }) => factory_id === 2);
+      setDiagramData(getData(factoryA, factoryB));
       setFactoryA(factoryA);
       setFactoryB(factoryB);
     });
   }, []);
 
-  const handleChange = (value) => {
-    setFilter(value)
-  };
-
   useEffect(() => {
+    localStorage.setItem("filter", filterId);
+
     if (Boolean(factoryA) && Boolean(factoryB)) {
-      setData(getData(factoryA, factoryB, filter));
+      setDiagramData(getData(factoryA, factoryB, filterId));
     }
-  }, [filter, factoryA, factoryB]);
+  }, [filterId, factoryA, factoryB]);
 
   const onClick = (event) => {
-    const [clickFabric] = getElementAtEvent(chartRef.current, event)
+    const [clickFabric] = getElementAtEvent(chartRef.current, event);
     if (!clickFabric) return;
 
     const factory_id = clickFabric.datasetIndex + 1;
     const month = clickFabric.index + 1;
     navigate(`/details/${factory_id}/${month}`);
-  }
+  };
 
   return (
-    <div style={style.container}>
-      <div style={style.filter}>
+    <div className={style.container}>
+      <div className={style.filter}>
         <h4>Фильтр по типу продукции</h4>
-        <BasicSelect actualValue={savedData} onChange={handleChange} />
+        <FilterSelect
+          filterId={filterId}
+          onChange={setFilterId}
+        />
       </div>
-      <div style={style.diagram}>
-        {data ? <Bar options={optionsDiagram} data={data} onClick={onClick} ref={chartRef} /> : null}
+      <div className={style.diagram}>
+        {diagramData && (
+          <Bar
+            options={optionsDiagram}
+            data={diagramData}
+            onClick={onClick}
+            ref={chartRef}
+          />
+        )}
       </div>
     </div>
   );

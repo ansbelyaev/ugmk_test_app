@@ -1,0 +1,22 @@
+.container {
+  max-width: 70%;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+.filter {
+  border: 2px solid gray;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  width: 100%;
+}
+.diagram {
+  margin-top: 25px;
+  width: 100%;
+  height: 600px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 10px;
+}

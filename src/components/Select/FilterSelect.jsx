@@ -1,28 +1,25 @@
 import * as React from "react";
+import { filters } from "../../constants/constants";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function BasicSelect({ actualValue, onChange }) {
-  const [value, setValue] = React.useState(actualValue);
-  
+export default function FilterSelect({ filterId, onChange }) {
   const handleChange = (event) => {
-    setValue(event.target.value);
     onChange(event.target.value);
-    localStorage.setItem('filter', event.target.value);
   };
 
   return (
     <Box sx={{ minWidth: 170, marginLeft: 5 }}>
       <FormControl fullWidth>
         <Select
-          value={value}
+          value={filterId}
           onChange={handleChange}
         >
-          <MenuItem value={"0"}>Все продукты</MenuItem>
-          <MenuItem value={"1"}>Продукт 1</MenuItem>
-          <MenuItem value={"2"}>Продукт 2</MenuItem>
+          {filters.map(({ label, id }) => (
+            <MenuItem key={id} value={id}>{label}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
